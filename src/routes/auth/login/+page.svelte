@@ -8,6 +8,7 @@
 		FieldDescription
 	} from '$lib/components/ui/field/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
+	import { enhance } from '$app/forms';
 </script>
 
 <div class="flex h-screen w-full items-center justify-center px-4">
@@ -17,11 +18,18 @@
 			<Card.Description>Enter your email below to login to your account</Card.Description>
 		</Card.Header>
 		<Card.Content>
-			<form>
+			<form action="?/signInEmail" use:enhance method="post">
 				<FieldGroup>
 					<Field>
 						<FieldLabel for="email">Email</FieldLabel>
-						<Input id="email" type="email" placeholder="mail@example.com" required />
+						<Input
+							id="email"
+							name="email"
+							type="email"
+							placeholder="mail@example.com"
+							autocomplete="off"
+							required
+						/>
 					</Field>
 					<Field>
 						<div class="flex items-center">
@@ -30,7 +38,7 @@
 								Forgot your password?
 							</a>
 						</div>
-						<Input id="password" type="password" required />
+						<Input id="password" name="password" type="password" required />
 					</Field>
 					<Field>
 						<Button type="submit" class="w-full">Login</Button>
