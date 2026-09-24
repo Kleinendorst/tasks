@@ -34,9 +34,6 @@
 					<Field>
 						<div class="flex items-center">
 							<FieldLabel for="password">Password</FieldLabel>
-							<a href="##" class="ms-auto inline-block text-sm underline">
-								Forgot your password?
-							</a>
 						</div>
 						<Input id="password" name="password" type="password" required />
 					</Field>
