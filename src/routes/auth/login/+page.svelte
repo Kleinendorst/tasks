@@ -9,6 +9,11 @@
 	} from '$lib/components/ui/field/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { enhance } from '$app/forms';
+	import CircleAlertIcon from '@lucide/svelte/icons/circle-alert';
+	import * as Alert from '$lib/components/ui/alert/index.js';
+	import type { PageProps } from './$types';
+
+	let { form }: PageProps = $props();
 </script>
 
 <div class="flex h-screen w-full items-center justify-center px-4">
@@ -19,6 +24,13 @@
 		</Card.Header>
 		<Card.Content>
 			<form action="?/signInEmail" use:enhance method="post">
+				{#if form?.message === 'Invalid email or password'}
+					<Alert.Root variant="destructive" class="max-w my-2">
+						<CircleAlertIcon />
+						<Alert.Title>Invalid login</Alert.Title>
+						<Alert.Description>Please try again or signup instead.</Alert.Description>
+					</Alert.Root>
+				{/if}
 				<FieldGroup>
 					<Field>
 						<FieldLabel for="email">Email</FieldLabel>
