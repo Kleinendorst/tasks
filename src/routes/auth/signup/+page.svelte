@@ -3,6 +3,7 @@
 	import * as Field from '$lib/components/ui/field/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
+	import { resolve } from '$app/paths';
 </script>
 
 <div class="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
@@ -39,9 +40,8 @@
 						<Field.Group>
 							<Field.Field>
 								<Button type="submit">Create Account</Button>
-								<Button variant="outline" type="button">Sign up with Google</Button>
 								<Field.Description class="px-6 text-center">
-									Already have an account? <a href="#/">Sign in</a>
+									Already have an account? <a href={resolve('/auth/login')}>Sign in</a>
 								</Field.Description>
 							</Field.Field>
 						</Field.Group>
