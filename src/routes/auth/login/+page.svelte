@@ -1,16 +1,17 @@
 <script lang="ts">
-	import * as Card from '$lib/components/ui/card/index.js';
+	import { enhance } from '$app/forms';
+	import { resolve } from '$app/paths';
+	import * as Alert from '$lib/components/ui/alert/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
+	import * as Card from '$lib/components/ui/card/index.js';
 	import {
-		FieldGroup,
 		Field,
-		FieldLabel,
-		FieldDescription
+		FieldDescription,
+		FieldGroup,
+		FieldLabel
 	} from '$lib/components/ui/field/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
-	import { enhance } from '$app/forms';
 	import CircleAlertIcon from '@lucide/svelte/icons/circle-alert';
-	import * as Alert from '$lib/components/ui/alert/index.js';
 	import type { PageProps } from './$types';
 
 	let { form }: PageProps = $props();
@@ -52,7 +53,7 @@
 					<Field>
 						<Button type="submit" class="w-full">Login</Button>
 						<FieldDescription class="text-center">
-							Don't have an account? <a href="##">Sign up</a>
+							Don't have an account? <a href={resolve('/auth/signup')}>Sign up</a>
 						</FieldDescription>
 					</Field>
 				</FieldGroup>
