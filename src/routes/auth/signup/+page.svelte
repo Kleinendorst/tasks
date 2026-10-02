@@ -1,9 +1,17 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import * as Card from '$lib/components/ui/card/index.js';
 	import * as Field from '$lib/components/ui/field/index.js';
-	import { Button } from '$lib/components/ui/button/index.js';
+	import * as Form from '$lib/components/ui/form/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
-	import { resolve } from '$app/paths';
+	import { superForm } from 'sveltekit-superforms';
+	import { zod4Client } from 'sveltekit-superforms/adapters';
+	import { formSchema } from './form-schema';
+
+	let { data } = $props();
+	// svelte-ignore state_referenced_locally
+	const form = superForm(data.form, { validators: zod4Client(formSchema) });
+	const { form: formData, enhance } = form;
 </script>
 
 <div class="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
@@ -14,36 +22,76 @@
 				<Card.Description>Enter your information below to create your account</Card.Description>
 			</Card.Header>
 			<Card.Content>
-				<form>
+				<form method="POST" use:enhance>
 					<Field.Group>
-						<Field.Field>
-							<Field.Label for="name">Full Name</Field.Label>
-							<Input id="name" type="text" placeholder="John Doe" required />
-						</Field.Field>
-						<Field.Field>
-							<Field.Label for="email">Email</Field.Label>
-							<Input id="email" type="email" placeholder="m@example.com" required />
-							<Field.Description>
+						<Form.Field {form} name="fullName">
+							<Form.Control>
+								{#snippet children({ props })}
+									<Form.Label>Full Name</Form.Label>
+									<Input
+										{...props}
+										bind:value={$formData.fullName}
+										placeholder="John Doe"
+										required
+									/>
+								{/snippet}
+							</Form.Control>
+							<Form.FieldErrors />
+						</Form.Field>
+						<Form.Field {form} name="email">
+							<Form.Control>
+								{#snippet children({ props })}
+									<Form.Label>Email</Form.Label>
+									<Input
+										{...props}
+										bind:value={$formData.email}
+										placeholder="m@example.com"
+										required
+									/>
+								{/snippet}
+							</Form.Control>
+							<Form.Description>
 								We'll use this to contact you. We will not share your email with anyone else.
-							</Field.Description>
-						</Field.Field>
-						<Field.Field>
-							<Field.Label for="password">Password</Field.Label>
-							<Input id="password" type="password" required />
-							<Field.Description>Must be at least 8 characters long.</Field.Description>
-						</Field.Field>
-						<Field.Field>
-							<Field.Label for="confirm-password">Confirm Password</Field.Label>
-							<Input id="confirm-password" type="password" required />
-							<Field.Description>Please confirm your password.</Field.Description>
-						</Field.Field>
+							</Form.Description>
+							<Form.FieldErrors />
+						</Form.Field>
+						<Form.Field {form} name="password">
+							<Form.Control>
+								{#snippet children({ props })}
+									<Form.Label>Password</Form.Label>
+									<Input
+										type="password"
+										max="50"
+										{...props}
+										bind:value={$formData.password}
+										required
+									/>
+								{/snippet}
+							</Form.Control>
+							<Form.Description>Must be at least 8 characters long.</Form.Description>
+							<Form.FieldErrors />
+						</Form.Field>
+						<Form.Field {form} name="passwordConfirm">
+							<Form.Control>
+								{#snippet children({ props })}
+									<Form.Label>Confirm Password</Form.Label>
+									<Input
+										type="password"
+										max="50"
+										{...props}
+										bind:value={$formData.passwordConfirm}
+										required
+									/>
+								{/snippet}
+							</Form.Control>
+							<Form.Description>Please confirm your password.</Form.Description>
+							<Form.FieldErrors />
+						</Form.Field>
 						<Field.Group>
-							<Field.Field>
-								<Button type="submit">Create Account</Button>
-								<Field.Description class="px-6 text-center">
-									Already have an account? <a href={resolve('/auth/login')}>Sign in</a>
-								</Field.Description>
-							</Field.Field>
+							<Form.Button>Create Account</Form.Button>
+							<Field.Description class="px-6 text-center">
+								Already have an account? <a href={resolve('/auth/login')}>Sign in</a>
+							</Field.Description>
 						</Field.Group>
 					</Field.Group>
 				</form>
