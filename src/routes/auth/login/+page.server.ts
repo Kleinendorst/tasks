@@ -12,8 +12,7 @@ export const actions: Actions = {
 			await auth.api.signInEmail({
 				body: {
 					email,
-					password,
-					callbackURL: '/'
+					password
 				}
 			});
 		} catch (error) {

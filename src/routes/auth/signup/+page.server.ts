@@ -27,8 +27,7 @@ export const actions: Actions = {
 				body: {
 					email: form.data.email,
 					password: form.data.password,
-					name: form.data.fullName,
-					callbackURL: '/auth/verification-success' // TODO: Can probabaly be changed...
+					name: form.data.fullName
 				}
 			});
 		} catch (error) {
