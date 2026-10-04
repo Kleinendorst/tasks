@@ -9,6 +9,9 @@
 	import { formSchema } from './form-schema';
 
 	let { data } = $props();
+
+	// The docs don't wrap these with $derived. I believe this is indeed not necessary because in both
+	// SSR and CSR cases the page doesn't need an updated instance from the server.
 	// svelte-ignore state_referenced_locally
 	const form = superForm(data.form, { validators: zod4Client(formSchema) });
 	const { form: formData, enhance } = form;
