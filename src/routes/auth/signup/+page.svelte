@@ -15,6 +15,7 @@
 	// svelte-ignore state_referenced_locally
 	const form = superForm(data.form, { validators: zod4Client(formSchema) });
 	const { form: formData, enhance } = form;
+	const isValid = $derived(formSchema.safeParse($formData).success);
 </script>
 
 <div class="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
@@ -91,7 +92,7 @@
 							<Form.FieldErrors />
 						</Form.Field>
 						<Field.Group>
-							<Form.Button>Create Account</Form.Button>
+							<Form.Button disabled={!isValid}>Create Account</Form.Button>
 							<Field.Description class="px-6 text-center">
 								Already have an account? <a href={resolve('/auth/login')}>Sign in</a>
 							</Field.Description>
